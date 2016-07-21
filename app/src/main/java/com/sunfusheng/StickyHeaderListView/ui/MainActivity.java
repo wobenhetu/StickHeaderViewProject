@@ -2,7 +2,6 @@ package com.sunfusheng.StickyHeaderListView.ui;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,27 +9,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.sunfusheng.StickyHeaderListView.R;
 import com.sunfusheng.StickyHeaderListView.adapter.TravelingAdapter;
-import com.sunfusheng.StickyHeaderListView.model.ChannelEntity;
 import com.sunfusheng.StickyHeaderListView.model.FilterData;
 import com.sunfusheng.StickyHeaderListView.model.FilterEntity;
 import com.sunfusheng.StickyHeaderListView.model.FilterTwoEntity;
-import com.sunfusheng.StickyHeaderListView.model.OperationEntity;
 import com.sunfusheng.StickyHeaderListView.model.TravelingEntity;
-import com.sunfusheng.StickyHeaderListView.util.ColorUtil;
 import com.sunfusheng.StickyHeaderListView.util.DensityUtil;
 import com.sunfusheng.StickyHeaderListView.util.ModelUtil;
 import com.sunfusheng.StickyHeaderListView.view.FilterView;
 import com.sunfusheng.StickyHeaderListView.view.HeaderAdViewView;
-import com.sunfusheng.StickyHeaderListView.view.HeaderChannelViewView;
 import com.sunfusheng.StickyHeaderListView.view.HeaderDividerViewView;
 import com.sunfusheng.StickyHeaderListView.view.HeaderFilterViewView;
-import com.sunfusheng.StickyHeaderListView.view.HeaderOperationViewView;
 import com.sunfusheng.StickyHeaderListView.view.SmoothListView.SmoothListView;
 
 import java.util.ArrayList;
@@ -59,13 +50,9 @@ public class MainActivity extends AppCompatActivity implements SmoothListView.IS
     private int mScreenHeight; // 屏幕高度
 
     private List<String> adList = new ArrayList<>(); // 广告数据
-    private List<ChannelEntity> channelList = new ArrayList<>(); // 频道数据
-    private List<OperationEntity> operationList = new ArrayList<>(); // 运营数据
     private List<TravelingEntity> travelingList = new ArrayList<>(); // ListView数据
 
     private HeaderAdViewView listViewAdHeaderView; // 广告视图
-    private HeaderChannelViewView headerChannelView; // 频道视图
-    private HeaderOperationViewView headerOperationViewView; // 运营视图
     private HeaderDividerViewView headerDividerViewView; // 分割线占位图
     private HeaderFilterViewView headerFilterViewView; // 分类筛选视图
     private FilterData filterData; // 筛选数据
@@ -116,16 +103,10 @@ public class MainActivity extends AppCompatActivity implements SmoothListView.IS
         filterData = new FilterData();
         filterData.setCategory(ModelUtil.getCategoryData());
         filterData.setSorts(ModelUtil.getSortData());
-        filterData.setFilters(ModelUtil.getFilterData());
+        filterData.setFilters(ModelUtil.getChuZFilterData());
 
         // 广告数据
         adList = ModelUtil.getAdData();
-
-        // 频道数据
-       // channelList = ModelUtil.getChannelData();
-
-        // 运营数据
-       // operationList = ModelUtil.getOperationData();
 
         // ListView数据
         travelingList = ModelUtil.getTravelingData();
@@ -146,14 +127,6 @@ public class MainActivity extends AppCompatActivity implements SmoothListView.IS
         // 设置广告数据
         listViewAdHeaderView = new HeaderAdViewView(this);
         listViewAdHeaderView.fillView(adList, smoothListView);
-
-        // 设置频道数据
-        //headerChannelView = new HeaderChannelViewView(this);
-        //headerChannelView.fillView(channelList, smoothListView);
-
-        // 设置运营数据
-        //headerOperationViewView = new HeaderOperationViewView(this);
-        // headerOperationViewView.fillView(operationList, smoothListView);
 
         // 设置分割线
         headerDividerViewView = new HeaderDividerViewView(this);
@@ -298,9 +271,6 @@ public class MainActivity extends AppCompatActivity implements SmoothListView.IS
                 }
 
                 fvTopFilter.setStickyTop(isStickyTop);
-
-                // 处理标题栏颜色渐变
-                //handleTitleBarColorEvaluate();
             }
         });
     }
@@ -318,38 +288,6 @@ public class MainActivity extends AppCompatActivity implements SmoothListView.IS
             smoothListView.setLoadMoreEnable(list.size() > TravelingAdapter.ONE_REQUEST_COUNT);
             mAdapter.setData(list);
         }
-    }
-
-    // 处理标题栏颜色渐变
-    private void handleTitleBarColorEvaluate()
-    {
-       /* float fraction;
-        if (adViewTopSpace > 0)
-        {
-            fraction = 1f - adViewTopSpace * 1f / 60;
-            if (fraction < 0f) fraction = 0f;
-            rlBar.setAlpha(fraction);
-            return;
-        }
-
-        float space = Math.abs(adViewTopSpace) * 1f;
-        fraction = space / (adViewHeight - titleViewHeight);
-        if (fraction < 0f) fraction = 0f;
-        if (fraction > 1f) fraction = 1f;
-        rlBar.setAlpha(1f);
-
-        if (fraction >= 1f || isStickyTop)
-        {
-            isStickyTop = true;
-            viewTitleBg.setAlpha(0f);
-            viewActionMoreBg.setAlpha(0f);
-            rlBar.setBackgroundColor(mContext.getResources().getColor(R.color.orange));
-        } else
-        {
-            viewTitleBg.setAlpha(1f - fraction);
-            viewActionMoreBg.setAlpha(1f - fraction);
-            rlBar.setBackgroundColor(ColorUtil.getNewColorByStartEndColor(mContext, fraction, R.color.transparent, R.color.orange));
-        }*/
     }
 
     @Override
