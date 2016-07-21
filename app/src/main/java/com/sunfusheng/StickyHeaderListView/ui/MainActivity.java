@@ -99,11 +99,11 @@ public class MainActivity extends AppCompatActivity implements SmoothListView.IS
         mActivity = this;
         mScreenHeight = DensityUtil.getWindowHeight(this);
 
-        // 筛选数据
+        //设置filter数据
         filterData = new FilterData();
-        filterData.setCategory(ModelUtil.getCategoryData());
-        filterData.setSorts(ModelUtil.getSortData());
-        filterData.setFilters(ModelUtil.getChuZFilterData());
+        filterData.setCategory(ModelUtil.getCategoryData());//设置分类
+        filterData.setSorts(ModelUtil.getSortData());//设置排序
+        filterData.setFilters(ModelUtil.getChuZFilterData());//设置筛选
 
         // 广告数据
         adList = ModelUtil.getAdData();
